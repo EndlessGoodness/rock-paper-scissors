@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        button{
+            margin: 5px
+        }
+    </style>
+</head>
+<body>
+    
+    <h1 style="text-align: center; color: black;">Rock-Paper-Scissors</h1>
+    <h3>Choose one of the following:</h3>
+    <button onclick="humanChoice('rock')" style="color: brown;">Rock</button>
+    <button onclick="humanChoice('paper')" style="color: rgb(118, 82, 247);">Paper</button>
+    <button onclick="humanChoice('scissors')" style="color: rgb(61, 57, 57);">Scissors</button>
+    <p id="you">You: 0</p>
+    <p id="bot">Bot: 0</p>
+    <h4 id="result"></h4>
+    <h3 id="winner"></h3>
+    <script>
+        let humansvictory = 0;
+        let botsvictory = 0;
+
+        function getComputerChoice(){
+            let rand = Math.floor(Math.random() * 3);
+            if(rand == 0){
+                return 'rock';
+            }else if(rand == 1){
+                return 'paper';
+            }else{
+                return 'scissors';
+            }
+        }
+
+        function humanChoice(choice){
+            const computerSelection = getComputerChoice();
+            let result = playRound(choice, computerSelection);
+            document.getElementById('you').innerText = `You: ${humansvictory}`;
+            document.getElementById('bot').innerText = `Bot: ${botsvictory}`;
+            document.getElementById('result').innerText = result;
+
+            if (humansvictory === 5 || botsvictory === 5) {
+                let winner = humansvictory === 5 ? 'You win the game!' : 'Bot wins the game!';
+                document.getElementById('winner').innerText = winner;
+                humansvictory = 0;
+                botsvictory = 0;
+                document.getElementById('you').innerText = `You: ${humansvictory}`;
+                document.getElementById('bot').innerText = `Bot: ${botsvictory}`;
+            } else {
+                document.getElementById('winner').innerText = '';
+            }
+        }
+
+        function playRound(humanChoice, computerChoice) {
+            if (humanChoice === computerChoice) {
+                return 'It\'s a tie!';
+            }
+            if (humanChoice === 'rock') {
+                if (computerChoice === 'paper') {
+                    botsvictory++;
+                    return 'You lose! Paper beats Rock';
+                } else {
+                    humansvictory++;
+                    return 'You win! Rock beats Scissors';
+                }
+            }
+            if (humanChoice === 'paper') {
+                if (computerChoice === 'scissors') {
+                    botsvictory++;
+                    return 'You lose! Scissors beats Paper';
+                } else {
+                    humansvictory++;
+                    return 'You win! Paper beats Rock';
+                }
+            }
+            if (humanChoice === 'scissors') {
+                if (computerChoice === 'rock') {
+                    botsvictory++;
+                    return 'You lose! Rock beats Scissors';
+                } else {
+                    humansvictory++;
+                    return 'You win! Scissors beats Paper';
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>
